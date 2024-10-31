@@ -127,9 +127,14 @@ def customer_login_route():
         result = cursor.fetchone();
         if result:
             CropID = result[0]
+            cursor.execute("SELECT * FROM Customers WHERE Cust_ID = %s AND Phone_No = %s", (customer_id, phone))
+            customer = cursor.fetchone()
             cursor.close()
             db.close()
-            return redirect(url_for('retrieve', customer_id=customer_id , crop_id=CropID) )
+            if customer:
+                return redirect(url_for('retrieve', customer_id=customer_id , crop_id=CropID) )
+            else:
+                return render_template('customer_login.html', error="Invalid Customer ID or Phone Number.")
             
             
         else:
