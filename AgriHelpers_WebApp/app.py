@@ -457,10 +457,22 @@ def get_crop_specialized_farmers(crop_id, num_farmers):
     return farmers
 
 
-@app.route('/retrieve')
+@app.route('/retrieve', methods = ['POST'])
 def retrieve():
     customer_id = request.args.get('customer_id')
     crop_id = request.args.get('crop_id') 
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM managers where CustomerID = %s",(customer_id,))
+    manager=cursor.fetchone()
+    cursor.execute("Select land_size from sites where CustomerID=%s",(customer_id,))
+    result = cursor.fetchone()
+    land_size = result['Land_size']
+    num_farmers= 2 * land_size
+
+    return render_template('customer_homepage.html', manager=manager, num_farmers=num_farmers)
+
 
 @app.route('/next_step', methods=['POST'])
 def next_step():
