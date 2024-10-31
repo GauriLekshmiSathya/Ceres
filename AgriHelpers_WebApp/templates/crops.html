@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suitable Crops</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Suitable Crops</h1>
+    <table>
+        <tr>
+            <th>Crop ID</th>
+            <th>Crop Name</th>
+        </tr>
+        {% for crop in crops %}
+        <tr>
+            <td>{{ crop.Crop_ID }}</td>
+            <td>{{ crop.Crop_Name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <form action="/update_crop" method="POST">
+        <input type="hidden" name="customer_id" value="{{ customer_id }}">
+        <label for="crop_id">Enter Preferred Crop's Crop ID:</label>
+        <input type="text" id="crop_id" name="crop_id" >
+        <button type="submit">Submit</button>
+        
+    </form>
+    <form action="/assign" METHOD = "post">
+        <input type="hidden" name="customer_id" value="{{ customer_id }}">
+        <input type="hidden" name="crop_id" value="{{ crops.Crop_ID }}">
+        <button type = "submit">Continue to home page</button>
+    </form>  
+</body>
+</html>

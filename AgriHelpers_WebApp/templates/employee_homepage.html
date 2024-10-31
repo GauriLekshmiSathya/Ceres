@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Login - AgriHelpers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .table-title {
+            font-size: 20px;
+            color: #333;
+            margin-top: 20px;
+        }
+        button {
+            padding: 8px 12px;          
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:active {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manager Dashboard</h1>
+        
+        <!-- Customer Allocation Table -->
+        <div class="table-title">Customers Allocated to Manager</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Crop</th>
+                    <th>Area</th>
+                    <th>Land Size</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated by Flask -->
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.crop }}</td>
+                    <td>{{ customer.area }}</td>
+                    <td>{{ customer.land_size }}</td>
+                    <td>{{ customer.number }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+        
+        <!-- Allocated Farmers Table -->
+        <div class="table-title">Farmers Allocated to Area</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Farmer ID</th>
+                    <th>Farmer Name</th>
+                    <th>Phone Number</th>
+                    <th>Remove Farmer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated by Flask -->
+                {% for farmer in allocated_farmers %}
+                <tr>
+                    <td>{{ farmer.Farmer_ID }}</td>
+                    <td>{{ farmer.Farmer_Name }}</td>
+                    <td>{{ farmer.Phone_No }}</td>
+                    <td>
+                        <form action="{{ url_for('manager_homepage') }}" method="POST">
+                        <input type="hidden" name="farmer_id" value="{{ farmer.Farmer_ID }}">
+                        <input type="hidden" name="manager_id" value="{{ customer.manager_id}}">
+                        <button type="submit">Remove</button>
+                        </form>
+                   </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <!-- Available Farmers Table -->
+        <div class="table-title">Available Farmers</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Farmer ID</th>
+                    <th>Farmer Name</th>
+                    <th>Phone Number</th>
+                    <th>Add a farmer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated by Flask -->
+                {% for farmer in available_farmers %}
+                <tr>
+                    <td>{{ farmer.Farmer_ID }}</td>
+                    <td>{{ farmer.Farmer_Name }}</td>
+                    <td>{{ farmer.Phone_No }}</td>
+                    <td>
+                         <form action="{{ url_for('manager_homepage') }}" method="POST">
+                         <input type="hidden" name="farmer_id" value="{{ farmer.Farmer_ID }}">
+                         <input type="hidden" name="manager_id" value="{{ customer.manager_id}}">
+                         <input type="hidden" name="customer_id" value="{{ customer.id }}"> <!-- Pass CustomerID here -->
+                         <button type="submit">Add</button>
+                         </form>
+                    </td>
+                        
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

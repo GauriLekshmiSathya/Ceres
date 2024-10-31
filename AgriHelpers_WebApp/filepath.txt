@@ -1,0 +1,16 @@
+C:\DBMS PROJECT\AgriHelpers_WebApp\
+│
+├── app.py                   # Main Flask app file
+├── requirements.txt          # Python dependencies
+│
+├── static\                   # Static files (CSS, JS, images)
+│   └── styles.css            # CSS styles for the app
+│
+├── templates\                # HTML files (Jinja templates)
+│   ├── index.html            # Welcome page (Page 1)
+│   ├── customer_page.html    # Customer details page (Page 2)
+│   ├── address_page.html     # Address and soil details page (Page 3)
+│   └── weather_page.html     # Weather and crop suggestion page (Page 4)
+│
+└── config\                   # Database configuration
+    └── db_config.py          # Database connection configuration
